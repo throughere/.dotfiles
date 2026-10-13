@@ -27,6 +27,7 @@
       ".steam"
       ".local/share/PrismLauncher"
       ".local/share/TelegramDesktop"
+      ".config/whatsapp-electron"
       ".config/qBittorrent"
       ".local/share/qBittorrent"
 
@@ -58,6 +59,7 @@
       # Dev tooling
       ".claude"
       ".config/gh"
+      ".local/share/DBeaverData"
       ".config/nvim"
       ".local/share/nvim"
       ".local/state/nvim"

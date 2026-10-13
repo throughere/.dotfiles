@@ -15,6 +15,7 @@
     cloc
 
     mycli
+    dbeaver-bin
     neovim
     vimPlugins.nvim-dbee
   ];
