@@ -76,16 +76,26 @@ in {
         echo "Mounting btrfs..."
         mkdir -p $MOUNTDIR
         mount -t btrfs -o subvol=/,user_subvol_rm_allowed $BTRFS_VOL $MOUNTDIR
+        # Never leak the top-level mount into stage 2 if anything below fails.
+        trap 'umount $MOUNTDIR' EXIT
 
         # Created up front so the find below cannot fail on a fresh disk.
         mkdir -p $MOUNTDIR/old_roots
 
         echo "Deleting old subvolumes"
+        # Best-effort GC: a stale snapshot must never abort the wipe (which
+        # would drop boot into emergency mode -- required by initrd.target).
         # -mindepth 1 so old_roots itself is never a deletion candidate.
         for old_subvolume in $(find $MOUNTDIR/old_roots/ -mindepth 1 -maxdepth 1 -mtime +30); do
           echo "Deleting $old_subvolume"
-          btrfs property set "$old_subvolume" ro false
-          btrfs subvolume delete -R "$old_subvolume"
+          # A subvolume root is always inode 256. Anything else is a plain
+          # directory (the install-day migration left one) -- rm it instead.
+          if [[ "$(stat -c %i "$old_subvolume")" == "256" ]]; then
+            btrfs property set "$old_subvolume" ro false || true
+            btrfs subvolume delete -R "$old_subvolume" || echo "WARNING: could not delete $old_subvolume"
+          else
+            rm -rf "$old_subvolume" || echo "WARNING: could not delete $old_subvolume"
+          fi
         done
 
         if [[ -e $MOUNTDIR/root ]]; then
@@ -96,7 +106,6 @@ in {
         fi
 
         btrfs subvolume create $MOUNTDIR/root
-        umount $MOUNTDIR
         echo "Done!"
       '';
     };
