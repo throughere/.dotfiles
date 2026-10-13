@@ -9,5 +9,6 @@
     yt-dlp
     nvtopPackages.full
     pavucontrol
+    tree-sitter
   ];
 }
