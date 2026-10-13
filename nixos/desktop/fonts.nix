@@ -5,8 +5,8 @@
       fantasque-sans-mono
       carlito
       dejavu_fonts
-      ipafont
-      kochi-substitute
+      noto-fonts-cjk-sans
+      noto-fonts-cjk-serif
       source-code-pro
       ttf_bitstream_vera
     ];
@@ -14,15 +14,15 @@
     fontconfig.defaultFonts = {
       monospace = [
         "DejaVu Sans Mono"
-        "IPAGothic"
+        "Noto Sans Mono CJK JP"
       ];
       sansSerif = [
         "DejaVu Sans"
-        "IPAPGothic"
+        "Noto Sans CJK JP"
       ];
       serif = [
         "DejaVu Serif"
-        "IPAPMincho"
+        "Noto Serif CJK JP"
       ];
     };
   };
