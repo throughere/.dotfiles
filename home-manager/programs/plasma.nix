@@ -10,26 +10,7 @@
 
   programs.plasma = {
     enable = true;
-    # Only the boot-time fallback: variety overwrites this same kscreenlockerrc
-    # key on every wallpaper change (change_lock_screen in its conf), so the lock
-    # screen follows the desktop. Previously pointed at ./desktop_picture.jpg,
-    # which does not exist in this repo -- nix never checks, since the path is
-    # just interpolated into a config string, so it built fine while the greeter
-    # logged "unknown wallpaper provider type" and fell back to the default.
-    #
-    # Points at the same symlink as the desktop rather than a fixed image:
-    # kscreenlockerrc is not persisted either, so until variety's first change of
-    # the session the lock screen was showing theme/background.jpg while the
-    # desktop already showed variety's wallpaper.
     kscreenlocker.appearance.wallpaper = "/home/salo/.config/variety/current-wallpaper";
-
-    # A stable path, kept pointing at variety's live wallpaper by
-    # variety-current-wallpaper.{service,path}. Plasma's own wallpaper setting
-    # lives in plasma-org.kde.plasma.desktop-appletsrc, which is not persisted, so
-    # every boot used to start on plasma's stock image until variety caught up.
-    # The symlink is under .config/variety, which IS persisted, so it already
-    # resolves to the last image at login. A string, not a nix path, so it stays a
-    # literal path instead of being copied into the store.
     workspace.wallpaper = "/home/salo/.config/variety/current-wallpaper";
     windows.allowWindowsToRememberPositions = false;
     workspace = {
@@ -47,23 +28,19 @@
         theme = "__aurorae__svg__Utterly-Round-Dark";
       };
       theme = "Utterly-Round";
-      colorScheme = "BreezeDark";
+      colorScheme = "CatppuccinMochaBlue";
     };
 
-    # Transcribed from the live ~/.config/powerdevilrc. AC only -- this is a
-    # desktop. shutDown is 8, not sleep: an hour idle powers off.
     powerdevil.AC = {
       powerButtonAction = "shutDown";
       autoSuspend = {
         action = "shutDown";
-        idleTimeout = 3600; # 1h
+        idleTimeout = 7200; # 2h
       };
       turnOffDisplay = {
-        idleTimeout = 1800; # 30min
-        idleTimeoutWhenLocked = 1800;
+        idleTimeout = 3600; # 1h
+        idleTimeoutWhenLocked = 3600;
       };
-      # Alone this emits DimDisplayIdleTimeoutSec=-1; an idleTimeout would force
-      # DimDisplayWhenIdle back to true.
       dimDisplay.enable = false;
     };
 
@@ -176,7 +153,7 @@
         wobblyWindows.enable = true;
         desktopSwitching.animation = "slide";
         windowOpenClose.animation = "fade";
-        blur.enable = false;
+        blur.enable = true;
       };
       virtualDesktops = {
         rows = lib.mkForce 2;
@@ -398,6 +375,7 @@
       "plasmashell"."toggle do not disturb" = "none";
     };
     configFile = {
+      "kdeglobals"."KDE"."widgetStyle" = "kvantum";
       "ksmserverrc"."General"."loginMode" = "emptySession";
       "kwalletrc"."Wallet"."Enabled" = true;
       # KDE's "Virtual Keyboard" setting. nixos/desktop/japanese.nix runs fcitx5
