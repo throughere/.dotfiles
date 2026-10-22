@@ -26,17 +26,6 @@ in {
     unixodbcDrivers.msodbcsql17
   ];
 
-  # Remmina's own "start in tray on login" toggle writes this file itself, into
-  # ~/.config/autostart -- which on salo-pc is the wiped root, so it survived on
-  # the laptop and vanished every boot on the PC. Declaring it is the fix;
-  # persisting ~/.config/autostart would only paper over it.
-  #
-  # Exec points at the wrapper rather than a bare `remmina` so the TLS 1.2 shim
-  # above is guaranteed to be LD_PRELOADed regardless of PATH (the PC resolves
-  # packages through /etc/profiles/per-user, the laptop through ~/.nix-profile).
-  # -i starts it iconified in the tray instead of opening the main window.
-  # force, because remmina writes this file itself whenever the tray setting is
-  # toggled -- an unmanaged copy would otherwise abort activation.
   xdg.configFile."autostart/remmina-applet.desktop" = {
     force = true;
     text = ''
@@ -48,7 +37,7 @@ in {
       Exec=${remmina-tls12}/bin/remmina -i
       Icon=org.remmina.Remmina
       Terminal=false
-      Hidden=false
+      Hidden=true
     '';
   };
 }
