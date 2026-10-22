@@ -72,6 +72,7 @@
       ".local/share/baloo"
       ".local/share/dolphin"
       ".local/share/konsole"
+      ".config/sunshine" 
       ".local/share/kactivitymanagerd"
       ".local/share/plasma-systemmonitor"
       ".local/share/sddm"
