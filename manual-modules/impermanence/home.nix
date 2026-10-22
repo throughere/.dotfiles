@@ -87,6 +87,8 @@
       ".cache/fontconfig"
       ".cache/thumbnails"
       ".cache/mozilla"
+      ".cache/arctracker-link"
+      ".local/state/arctracker-link"
       ".cache/com.bitwarden.desktop"
     ];
 
