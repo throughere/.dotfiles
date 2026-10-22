@@ -1,6 +1,22 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  lib,
+  ...
+}: {
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   home.stateVersion = "24.05";
+
+  # Closing the lid should not suspend/shut down the laptop
+  programs.plasma.powerdevil = {
+    AC = {
+      whenLaptopLidClosed = "doNothing";
+      autoSuspend = {
+        action = lib.mkForce "nothing";
+        idleTimeout = lib.mkForce null;
+      };
+    };
+    battery.whenLaptopLidClosed = "doNothing";
+  };
 
   home.packages = with pkgs; [
     lenovo-legion
