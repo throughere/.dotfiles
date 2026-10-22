@@ -3,26 +3,32 @@
   pkgs,
   ...
 }: {
-  # Virtualization
-  hardware.nvidia-container-toolkit.enable = true;
-  #hardware.nvidia.dynamicBoost.enable = true;
-
   # Enable NVIDIA
   services.xserver.videoDrivers = ["nvidia"];
-  hardware.graphics = {
-    enable = true;
+  
+  hardware = {
+    nvidia-container-toolkit.enable = true;
+    graphics = {
+      enable = true;
+      extraPackages = with pkgs; [intel-media-driver];
+    };
+    nvidia = {
+      modesetting.enable = true;
+      powerManagement.enable = false;
+      powerManagement.finegrained = false;
+      open = false;
+      package = config.boot.kernelPackages.nvidiaPackages.latest;
+    };
   };
 
-  hardware.nvidia = {
-    modesetting.enable = true;
-    powerManagement.enable = false;
-    powerManagement.finegrained = false;
-    open = false;
-    package = config.boot.kernelPackages.nvidiaPackages.latest;
-    #prime = {
-    #  sync.enable = true;
-    #  intelBusId = "PCI:0:2:0";
-    #  nvidiaBusId = "PCI:1:0:0";
-    #};
+
+  environment.sessionVariables.LIBVA_DRIVER_NAME = "iHD";
+  services.sunshine.settings = {
+    encoder = "vaapi";
+    adapter_name = "/dev/dri/renderD128";
+  };
+  systemd.user.services.sunshine.environment = {
+    LIBVA_DRIVER_NAME = "iHD";
+    LIBVA_DRIVERS_PATH = "/run/opengl-driver/lib/dri";
   };
 }
