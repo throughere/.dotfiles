@@ -73,6 +73,7 @@
       ".local/share/dolphin"
       ".local/share/konsole"
       ".config/sunshine" 
+      ".config/Moonlight Game Streaming Project" # moonlight client settings + pairings
       ".local/share/kactivitymanagerd"
       ".local/share/plasma-systemmonitor"
       ".local/share/sddm"

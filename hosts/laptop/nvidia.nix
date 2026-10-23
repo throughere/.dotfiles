@@ -26,6 +26,8 @@
   services.sunshine.settings = {
     encoder = "vaapi";
     adapter_name = "/dev/dri/renderD128";
+    # Allow opening the web UI over the mesh / LAN (CSRF guard).
+    csrf_allowed_origins = "https://100.64.0.2:47990,https://192.168.0.247:47990";
   };
   systemd.user.services.sunshine.environment = {
     LIBVA_DRIVER_NAME = "iHD";
