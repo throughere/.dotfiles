@@ -11,7 +11,6 @@
     ${config.boot.initrd.systemd.package}/bin/systemd-tty-ask-password-agent --query --watch
   '';
 in {
-  # RTL8125 NIC + WireGuard must exist in the initrd.
   boot.initrd.availableKernelModules = ["r8169"];
   boot.initrd.kernelModules = ["wireguard"];
 
