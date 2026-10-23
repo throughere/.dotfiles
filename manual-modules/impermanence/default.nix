@@ -132,6 +132,7 @@ in {
     directories = [
       "/var/log"
       "/var/lib/bluetooth"
+      "/var/lib/tailscale"
       "/var/lib/nixos" # uid/gid allocations -- losing this reshuffles users
       "/var/lib/systemd/coredump"
       "/etc/NetworkManager/system-connections"
