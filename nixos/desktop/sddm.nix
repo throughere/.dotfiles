@@ -5,7 +5,7 @@
   services.displayManager = {
     defaultSession = "plasma";
     autoLogin = {
-      enable = false;
+      enable = true;
       user = "salo";
     };
     sddm = {
