@@ -5,6 +5,7 @@
   ];
 
   networking.hostName = "salo-laptop";
+  networking.interfaces.enp92s0.wakeOnLan.enable = true;
 
   # Keep the laptop running with the lid shut so remote Sunshine/SSH sessions survive a closed lid
   services.logind = {
