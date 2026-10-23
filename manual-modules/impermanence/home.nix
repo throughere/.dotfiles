@@ -72,7 +72,8 @@
       ".local/share/baloo"
       ".local/share/dolphin"
       ".local/share/konsole"
-      ".config/sunshine" 
+      ".config/sunshine"
+      ".local/share/xdg-desktop-portal"
       ".config/Moonlight Game Streaming Project" # moonlight client settings + pairings
       ".local/share/kactivitymanagerd"
       ".local/share/plasma-systemmonitor"
