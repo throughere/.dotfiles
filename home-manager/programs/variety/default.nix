@@ -45,14 +45,21 @@
   systemd.user.services.variety = {
     Unit = {
       Description = "Variety wallpaper changer";
-      After = ["graphical-session.target" "plasma-plasmashell.service"];
+      After = ["graphical-session.target" "plasma-plasmashell.service" "time-sync.target"];
+      Wants = ["time-sync.target"];
       PartOf = ["graphical-session.target"];
     };
 
     Install.WantedBy = ["graphical-session.target"];
 
     Service = {
-      ExecStartPre = "${pkgs.coreutils}/bin/sleep 3";
+      ExecStartPre = [
+        "${pkgs.coreutils}/bin/sleep 3"
+        (toString (pkgs.writeShellScript "variety-reset-stale-failures" ''
+          export PATH=${lib.makeBinPath [pkgs.python3 pkgs.coreutils pkgs.findutils]}
+          exec ${pkgs.bash}/bin/bash ${./reset-stale-failures.sh}
+        ''))
+      ];
       ExecStart = "${pkgs.variety}/bin/variety --profile ${config.xdg.configHome}/variety/";
       Restart = "on-failure";
       RestartSec = 5;
