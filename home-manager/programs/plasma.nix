@@ -378,6 +378,9 @@
       "kdeglobals"."KDE"."widgetStyle" = "kvantum";
       "ksmserverrc"."General"."loginMode" = "emptySession";
       "kwalletrc"."Wallet"."Enabled" = true;
+      "kwalletrc"."Wallet"."Default Wallet" = "kdewallet";
+      "kwalletrc"."Wallet"."First Use" = false;
+      "kwalletrc"."Wallet"."Prompt on Open" = false;
       # KDE's "Virtual Keyboard" setting. nixos/desktop/japanese.nix runs fcitx5
       # with waylandFrontend, which deliberately leaves GTK_IM_MODULE/QT_IM_MODULE
       # unset -- the compositor's input-method protocol is then the only input

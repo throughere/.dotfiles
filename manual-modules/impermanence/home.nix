@@ -69,6 +69,7 @@
       ".local/state/home-manager"
 
       # Plasma runtime state that is not worth re-teaching every boot
+      ".local/share/kwalletd"
       ".local/share/baloo"
       ".local/share/dolphin"
       ".local/share/konsole"
