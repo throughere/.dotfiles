@@ -1,6 +1,15 @@
 {
+  # With mutableUsers = true, hashedPassword below is only applied when the
+  # account is first created, so later edits here would never reach
+  # /etc/shadow. False makes this file the source of truth on every rebuild,
+  # at the cost of `passwd` no longer sticking.
+  users.mutableUsers = false;
+
+  # Every user without a hashedPassword here gets locked, root included.
+  users.users.root.hashedPassword = "$y$j9T$2YUZ8vGau.Bv9z/1B31nk.$EvxWs77kHy4JP6y/oOEm32kB9dNuqsSxxsX1Sh0uhnC";
+
   users.users.salo = {
-    hashedPassword = "$y$j9T$HlMj/BCljFGX8MfbgdvAL1$pBRwCmhw0qhrhq8/Iw1N069Qzwd87ZZah5ZTxW5yyO7";
+    hashedPassword = "$y$j9T$2YUZ8vGau.Bv9z/1B31nk.$EvxWs77kHy4JP6y/oOEm32kB9dNuqsSxxsX1Sh0uhnC";
     isNormalUser = true;
     # Both hosts' keys, so ssh/scp/sftp works in either direction between them
     # (this file is shared, so each host authorizes the other and itself).
